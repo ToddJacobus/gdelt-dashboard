@@ -7,14 +7,13 @@ export const fetchArticles = (search="") => async dispatch => {
   if (search.length > 0) {
     queryString = `query="${search}"&`
   }
-  console.log(`?${queryString}toneabs>0&format=GeoJSON&sortby=Count&TIMESPAN=1440`)
+  console.log(`?${queryString}toneabs>0&format=GeoJSON&sortby=Count&TIMESPAN=60`)
   const response = await gdeltDaily.get(`?${queryString}toneabs>0&format=GeoJSON&sortby=Count&TIMESPAN=1440`);
   dispatch({type:'GET_ARTICLES', payload: response.data.features})
 };
 
 
-
-export const loadArticleDetails = (url) => async dispatch => {
-  const articleDetails = getDetails(url)
+export const loadArticleDetails = (url=null) => async dispatch => {
+  const articleDetails = await getDetails(url)
   dispatch({type:'GET_DETAILS', payload: articleDetails})
 }

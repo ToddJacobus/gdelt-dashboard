@@ -1,20 +1,31 @@
 import read from 'readability-js';
 
+export default (url) => {
+  if (url) {
+    read(url, (err, article, meta) => {
+      try {
+        const contents = {
+          'title': article.title,
+          'content': article.content,
+          'source': article.html,
+          'dom': article.document,
+          'responseObj': article.meta
+        }
+        article.close();
+        return contents
+      }
+      catch (err) {
+        console.log(err)
+      }
+    });
+  } else {
+    return {
+      'title': 'loading...',
+      'content': 'loading...',
+      'source': 'loading...',
+      'dom': 'loading...',
+      'responseObj': 'loading...'
+    }
+  }
 
-
-
-const getDetails = (url) => {
-  console.log("articleParser api function here...")
-  return true
-  // extract(url).then((article) => {
-  //   console.log(article);
-  //   return article
-  // }).catch((err) => {
-  //   console.log(err);
-  //   return undefined
-  // })
-
-
-};
-
-export default getDetails;
+}

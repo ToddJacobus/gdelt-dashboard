@@ -24,7 +24,7 @@ class ArticleList extends React.Component {
           <img className="ui image small" src={article.properties.shareimage} alt="#" />
           <div className="content">
             <div className="description">
-              <ArticleDetail />
+              <ArticleDetail html={article.properties.html}/>
               <br/>
               <h4>{article.properties.name}</h4>
               <p>Event Count: {article.properties.count}</p>
