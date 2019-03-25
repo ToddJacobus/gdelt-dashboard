@@ -15,6 +15,24 @@ class ArticleList extends React.Component {
     this.props.fetchArticles()
   }
 
+  getInfoFromHtml (html) {
+    // regex = 'href=\\"'
+    if (html) {
+        let dummy = document.createElement('html')
+        dummy.innerHTML = html
+        return {
+          'url':dummy.getElementsByTagName('a')[0].href,
+          'title':dummy.getElementsByTagName('a')[0].title
+        }
+    } else {
+        return {
+          'url':'',
+          'title':''
+        }
+    }
+
+  }
+
   // TODO: Pass the article url down to ArticleList component as a prop so that
   //       the right details can be requested.
   renderList() {
@@ -24,7 +42,8 @@ class ArticleList extends React.Component {
           <img className="ui image small" src={article.properties.shareimage} alt="#" />
           <div className="content">
             <div className="description">
-              <ArticleDetail html={article.properties.html}/>
+              <h2>{this.getInfoFromHtml(article.properties.html).title}</h2>
+              <ArticleDetail url={this.getInfoFromHtml(article.properties.html).url}/>
               <br/>
               <h4>{article.properties.name}</h4>
               <p>Event Count: {article.properties.count}</p>
